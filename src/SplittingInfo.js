@@ -1,6 +1,10 @@
 import { useState } from "react";
 
-function SplittingInfo({ selectedFriend, updateFriendBalance }) {
+function SplittingInfo({
+  selectedFriend,
+  updateFriendBalance,
+  closeFormAndResetSelection,
+}) {
   const [billVal, setBillVal] = useState(0);
   const [yourExpense, setYourExpense] = useState(0);
   const [billPayer, setBillPayer] = useState("user");
@@ -12,7 +16,7 @@ function SplittingInfo({ selectedFriend, updateFriendBalance }) {
   }
   function handleSplitSubmit(e) {
     e.preventDefault();
-    console.log(" Form submitted with:", { billVal, yourExpense, billPayer });
+    console.log("Form submitted with:", { billVal, yourExpense, billPayer });
     if (billPayer === "user") {
       const newBalance = selectedFriend.balance + (billVal - yourExpense);
       updateFriendBalance(selectedFriend, newBalance);
@@ -20,8 +24,10 @@ function SplittingInfo({ selectedFriend, updateFriendBalance }) {
       const newBalance = selectedFriend.balance - (billVal - yourExpense);
       updateFriendBalance(selectedFriend, newBalance);
     }
-    // console.log(" Form submitted with:", { billVal, yourExpense, billPayer });
+
+    closeFormAndResetSelection();
   }
+
   return (
     <form className="form-split-bill" onSubmit={handleSplitSubmit}>
       <h2>Split a bill with {selectedFriend.name}</h2>

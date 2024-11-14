@@ -1,4 +1,3 @@
-import initialFriends from "./data";
 import React, { useState } from "react";
 function FriendsList({ handleSelectClick, selectedFriend, friends }) {
   //   console.log(selectedFriend);

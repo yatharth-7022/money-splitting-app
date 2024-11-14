@@ -14,6 +14,7 @@ function App() {
   function generateRandomNumericId() {
     return Math.floor(10000000 + Math.random() * 90000000);
   }
+
   function handleSelectClick(friend) {
     // console.log(selectedFriend);
     setSelectedFriend((prevSelectedFriend) =>
@@ -52,6 +53,11 @@ function App() {
     setToggleAddFriendButton((prevState) => !prevState);
     setToggleAddFriend((prevState) => !prevState);
   }
+  function closeFormAndResetSelection() {
+    setSelectedFriend(null);
+    setToggleForm(false);
+  }
+
   return (
     <div className="app">
       <div className="sidebar">
@@ -83,6 +89,7 @@ function App() {
         <SplittingInfo
           selectedFriend={selectedFriend}
           updateFriendBalance={updateFriendBalance}
+          closeFormAndResetSelection={closeFormAndResetSelection}
         />
       ) : null}
     </div>
