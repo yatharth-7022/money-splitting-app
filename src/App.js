@@ -3,10 +3,17 @@ import { useState } from "react";
 import initialFriends from "./data";
 import FriendsList from "./FriendsList";
 import SplittingInfo from "./SplittingInfo";
+import AddFriend from "./AddFriend";
 function App() {
   const [selectedFriend, setSelectedFriend] = useState(null);
   const [friends, setFriends] = useState(initialFriends);
   const [toggleForm, setToggleForm] = useState(false);
+  const [toggleAddFriend, setToggleAddFriend] = useState(false);
+  const [toggleAddFriendButton, setToggleAddFriendButton] = useState(true);
+  const [newFriend, setNewFriend] = useState("");
+  function generateRandomNumericId() {
+    return Math.floor(10000000 + Math.random() * 90000000);
+  }
   function handleSelectClick(friend) {
     // console.log(selectedFriend);
     setSelectedFriend((prevSelectedFriend) =>
@@ -21,7 +28,30 @@ function App() {
       )
     );
   }
+  function handleAddingFriend() {
+    setToggleAddFriend((prevState) => !prevState);
+    setToggleAddFriendButton((prevState) => !prevState);
+  }
+  function handleFriendName(e) {
+    setNewFriend(e.target.value);
+  }
+  function handleFinalAdd(newFriend, imageSrc) {
+    console.log(newFriend);
+    let add = {
+      id: generateRandomNumericId(),
+      name: newFriend,
+      image: imageSrc,
+      balance: 0,
+    };
 
+    setFriends([...friends, add]);
+    setToggleAddFriendButton((prevState) => !prevState);
+    setToggleAddFriend((prevState) => !prevState);
+  }
+  function handleClose() {
+    setToggleAddFriendButton((prevState) => !prevState);
+    setToggleAddFriend((prevState) => !prevState);
+  }
   return (
     <div className="app">
       <div className="sidebar">
@@ -32,8 +62,22 @@ function App() {
             friends={friends}
           />
         </ul>
-        <button className="button">Add friend</button>
-        {/* on click we will ad add friends to it */}
+        {toggleAddFriendButton ? (
+          <button className="button add" onClick={handleAddingFriend}>
+            Add friend
+          </button>
+        ) : null}
+
+        {toggleAddFriend ? (
+          <AddFriend
+            newFriend={newFriend}
+            handleFriendName={handleFriendName}
+            handleFinalAdd={handleFinalAdd}
+            handleClose={handleClose}
+          />
+        ) : (
+          ""
+        )}
       </div>
       {toggleForm === true ? (
         <SplittingInfo

@@ -4,6 +4,7 @@ function SplittingInfo({ selectedFriend, updateFriendBalance }) {
   const [billVal, setBillVal] = useState(0);
   const [yourExpense, setYourExpense] = useState(0);
   const [billPayer, setBillPayer] = useState("user");
+
   function handleYourExpense(e) {
     const expense = parseFloat(e.target.value) || 0;
     const billValue = parseFloat(billVal) || 0;
